@@ -16,6 +16,7 @@
   "gui.albisrpg.character.attributes.vitality": "Vitality",
   "gui.albisrpg.character.stats.damage": "Damage",
   "gui.albisrpg.character.stats.defense": "Defense",
+  "gui.albisrpg.character.stats.speed": "Speed",
   "gui.albisrpg.character.stats.health": "Health",
   "gui.albisrpg.character.stats.mana": "Mana"
 }

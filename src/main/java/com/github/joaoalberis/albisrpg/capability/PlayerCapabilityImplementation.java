@@ -17,6 +17,13 @@ public class PlayerCapabilityImplementation implements PlayerCapabilityInterface
     private static final String NBT_KEY_INTELLIGENCE = "intelligence";
     private static final String NBT_KEY_AGILITY = "agility";
     private static final String NBT_KEY_VITALITY = "vitality";
+    private static final String NBT_KEY_DAMAGE = "damage";
+    private static final String NBT_KEY_DEFENSE = "defense";
+    private static final String NBT_KEY_SPEED = "speed";
+    private static final String NBT_KEY_MANA = "mana";
+    private static final String NBT_KEY_MAX_MANA = "max_mana";
+    private static final String NBT_KEY_HEALTH = "health";
+
 
     private String playerClass = "";
     private int level = 1;
@@ -25,6 +32,12 @@ public class PlayerCapabilityImplementation implements PlayerCapabilityInterface
     private int intelligence = 1;
     private int agility = 1;
     private int vitality = 1;
+    private int damage = 1;
+    private int defense = 1;
+    private float speed = 1;
+    private int mana = 1;
+    private int maxMana = 1;
+    private int health = 1;
 
     @Override
     public void syncToServer(Entity entity){
@@ -111,6 +124,64 @@ public class PlayerCapabilityImplementation implements PlayerCapabilityInterface
     }
 
     @Override
+    public int getDamage() {
+        return damage;
+    }
+
+    @Override
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    @Override
+    public int getDefense() {
+        return defense;
+    }
+
+    @Override
+    public void setDefense(int defense) {
+        this.defense = defense;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
+    }
+
+    @Override
+    public int getMana() {
+        return mana;
+    }
+
+    @Override
+    public void setMana(int mana) {
+        this.mana = mana;
+    }
+
+    @Override
+    public int getMaxMana() {
+        return maxMana;
+    }
+
+    @Override
+    public void setMaxMana(int maxMana) {
+        this.maxMana = maxMana;
+    }
+
+    @Override
+    public int getHealth() {
+        return health;
+    }
+
+    @Override
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    @Override
     public CompoundTag serializeNBT() {
         CompoundTag compoundTag = new CompoundTag();
         compoundTag.putString(NBT_KEY_PLAYER_CLASS, this.playerClass);
@@ -120,6 +191,12 @@ public class PlayerCapabilityImplementation implements PlayerCapabilityInterface
         compoundTag.putInt(NBT_KEY_INTELLIGENCE, this.intelligence);
         compoundTag.putInt(NBT_KEY_AGILITY, this.agility);
         compoundTag.putInt(NBT_KEY_VITALITY, this.vitality);
+        compoundTag.putInt(NBT_KEY_DAMAGE, this.damage);
+        compoundTag.putInt(NBT_KEY_DEFENSE, this.defense);
+        compoundTag.putFloat(NBT_KEY_SPEED, this.speed);
+        compoundTag.putInt(NBT_KEY_MANA, this.mana);
+        compoundTag.putInt(NBT_KEY_MAX_MANA, this.maxMana);
+        compoundTag.putInt(NBT_KEY_HEALTH, this.health);
 
         return compoundTag;
     }
@@ -140,5 +217,11 @@ public class PlayerCapabilityImplementation implements PlayerCapabilityInterface
         this.intelligence = nbt.getInt(NBT_KEY_INTELLIGENCE);
         this.agility = nbt.getInt(NBT_KEY_AGILITY);
         this.vitality = nbt.getInt(NBT_KEY_VITALITY);
+        this.damage = nbt.getInt(NBT_KEY_DAMAGE);
+        this.defense = nbt.getInt(NBT_KEY_DEFENSE);
+        this.speed = nbt.getFloat(NBT_KEY_SPEED);
+        this.mana = nbt.getInt(NBT_KEY_MANA);
+        this.maxMana = nbt.getInt(NBT_KEY_MAX_MANA);
+        this.health = nbt.getInt(NBT_KEY_HEALTH);
     }
 }

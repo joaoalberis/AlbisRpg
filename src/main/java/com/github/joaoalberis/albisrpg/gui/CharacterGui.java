@@ -27,6 +27,7 @@ public class CharacterGui extends Screen {
     private static final Component VITALLY = Component.translatable("gui.albisrpg.character.attributes.vitality");
     private static final Component DAMAGE = Component.translatable("gui.albisrpg.character.stats.damage");
     private static final Component DEFENSE = Component.translatable("gui.albisrpg.character.stats.defense");
+    private static final Component SPEED = Component.translatable("gui.albisrpg.character.stats.speed");
     private static final Component MANA = Component.translatable("gui.albisrpg.character.stats.mana");
     private static final Component HEALTH = Component.translatable("gui.albisrpg.character.stats.health");
 
@@ -95,12 +96,19 @@ public class CharacterGui extends Screen {
             x=this.bgWidth;
             y=topPos * 2;
             graphics.drawString(font, DAMAGE, x, y, 0x000000, false);
+            graphics.drawString(font, String.valueOf(c.getDamage()), x + DAMAGE.getString().length() * 6, y, 0x000000, false);
             y+=10;
             graphics.drawString(font, DEFENSE, x, y, 0x000000, false);
+            graphics.drawString(font, String.valueOf(c.getDefense()), x + DEFENSE.getString().length() * 6, y, 0x000000, false);
+            y+=10;
+            graphics.drawString(font, SPEED, x, y, 0x000000, false);
+            graphics.drawString(font, String.valueOf(c.getSpeed()), x + SPEED.getString().length() * 6, y, 0x000000, false);
             y+=10;
             graphics.drawString(font, MANA, x, y, 0x000000, false);
+            graphics.drawString(font, String.valueOf(c.getMaxMana()), x + MANA.getString().length() * 6, y, 0x000000, false);
             y+=10;
             graphics.drawString(font, HEALTH, x, y, 0x000000, false);
+            graphics.drawString(font, String.valueOf(c.getHealth()), x + HEALTH.getString().length() * 6, y, 0x000000, false);
         });
 
         super.render(graphics, mousex, mousey, partialTicks);
@@ -115,10 +123,22 @@ public class CharacterGui extends Screen {
         Component message = button.getMessage();
         player.getCapability(PlayerCapability.PLAYER_CAPABILITY).ifPresent(c -> {
             switch (message.getString()){
-                case "strength" -> c.setStrength(c.getStrength() + 1);
-                case "agility" -> c.setAgility(c.getAgility() + 1);
-                case "intelligence" -> c.setIntelligence(c.getIntelligence() + 1);
-                case "vitally" -> c.setVitality(c.getVitality() + 1);
+                case "strength" -> {
+                    c.setStrength(c.getStrength() + 1);
+                    c.setDamage(c.getStrength() * 2);
+                }
+                case "agility" -> {
+                    c.setAgility(c.getAgility() + 1);
+                    c.setSpeed(c.getAgility() * 0.5f);
+                }
+                case "intelligence" -> {
+                    c.setIntelligence(c.getIntelligence() + 1);
+                    c.setMaxMana(c.getIntelligence() * 5);
+                }
+                case "vitally" -> {
+                    c.setVitality(c.getVitality() + 1);
+                    c.setHealth(c.getVitality() * 10);
+                }
             }
             c.syncToServer(player);
         });

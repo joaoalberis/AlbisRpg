@@ -22,5 +22,16 @@ public interface PlayerCapabilityInterface extends INBTSerializable<CompoundTag>
     void setAgility(int agility);
     int getVitality();
     void setVitality(int vitality);
-
+    int getDamage();
+    void setDamage(int damage);
+    int getDefense();
+    void setDefense(int defense);
+    float getSpeed();
+    void setSpeed(float speed);
+    int getMana();
+    void setMana(int mana);
+    int getMaxMana();
+    void setMaxMana(int maxMana);
+    int getHealth();
+    void setHealth(int health);
 }
