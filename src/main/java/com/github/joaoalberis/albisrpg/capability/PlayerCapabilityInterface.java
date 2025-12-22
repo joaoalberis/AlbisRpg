@@ -6,14 +6,19 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 public interface PlayerCapabilityInterface extends INBTSerializable<CompoundTag> {
 
+    void addExperience(float amount);
     void syncToClient(Entity entity);
     void syncToServer(Entity entity);
     String getPlayerClass();
     void setPlayerClass(String playerClass);
     int getLevel();
     void setLevel(int level);
-    int getExperience();
-    void setExperience(int experience);
+    float getExperienceToNextLevel();
+    void setExperienceToNextLevel(float experienceToNextLevel);
+    int getPoints();
+    void setPoints(int level);
+    float getExperience();
+    void setExperience(float experience);
     int getStrength();
     void setStrength(int strength);
     int getIntelligence();

@@ -13,6 +13,8 @@ public class PlayerCapabilityImplementation implements PlayerCapabilityInterface
     private static final String NBT_KEY_PLAYER_CLASS = "player_class";
     private static final String NBT_KEY_LEVEL = "level";
     private static final String NBT_KEY_EXPERIENCE = "experience";
+    private static final String NBT_KEY_EXPERIENCE_TO_NEXT_LEVEL = "experience_to_next_level";
+    private static final String NBT_KEY_POINTS = "points";
     private static final String NBT_KEY_STRENGTH = "strength";
     private static final String NBT_KEY_INTELLIGENCE = "intelligence";
     private static final String NBT_KEY_AGILITY = "agility";
@@ -27,7 +29,9 @@ public class PlayerCapabilityImplementation implements PlayerCapabilityInterface
 
     private String playerClass = "";
     private int level = 1;
-    private int experience = 0;
+    private float experience = 0;
+    private float experienceToNextLevel = 10;
+    private int points = 0;
     private int strength = 1;
     private int intelligence = 1;
     private int agility = 1;
@@ -38,6 +42,18 @@ public class PlayerCapabilityImplementation implements PlayerCapabilityInterface
     private int mana = 1;
     private int maxMana = 1;
     private int health = 1;
+
+    @Override
+    public void addExperience(float amount){
+        if (amount + experience >= experienceToNextLevel){
+            this.experience = (amount + experience) - experienceToNextLevel;
+            this.experienceToNextLevel = 1;
+            this.level++;
+            this.points++;
+        }else {
+            this.experience += amount;
+        }
+    }
 
     @Override
     public void syncToServer(Entity entity){
@@ -74,13 +90,33 @@ public class PlayerCapabilityImplementation implements PlayerCapabilityInterface
     }
 
     @Override
-    public int getExperience() {
+    public float getExperience() {
         return this.experience;
     }
 
     @Override
-    public void setExperience(int experience) {
+    public void setExperience(float experience) {
         this.experience = experience;
+    }
+
+    @Override
+    public float getExperienceToNextLevel() {
+        return this.experienceToNextLevel;
+    }
+
+    @Override
+    public void setExperienceToNextLevel(float experienceToNextLevel) {
+        this.experienceToNextLevel = experienceToNextLevel;
+    }
+
+    @Override
+    public int getPoints() {
+        return this.points;
+    }
+
+    @Override
+    public void setPoints(int points) {
+        this.points = points;
     }
 
     @Override
@@ -186,7 +222,9 @@ public class PlayerCapabilityImplementation implements PlayerCapabilityInterface
         CompoundTag compoundTag = new CompoundTag();
         compoundTag.putString(NBT_KEY_PLAYER_CLASS, this.playerClass);
         compoundTag.putInt(NBT_KEY_LEVEL, this.level);
-        compoundTag.putInt(NBT_KEY_EXPERIENCE, this.experience);
+        compoundTag.putFloat(NBT_KEY_EXPERIENCE, this.experience);
+        compoundTag.putFloat(NBT_KEY_EXPERIENCE_TO_NEXT_LEVEL, this.experienceToNextLevel);
+        compoundTag.putInt(NBT_KEY_POINTS, this.points);
         compoundTag.putInt(NBT_KEY_STRENGTH, this.strength);
         compoundTag.putInt(NBT_KEY_INTELLIGENCE, this.intelligence);
         compoundTag.putInt(NBT_KEY_AGILITY, this.agility);
@@ -212,7 +250,9 @@ public class PlayerCapabilityImplementation implements PlayerCapabilityInterface
         }
         this.playerClass = nbt.getString(NBT_KEY_PLAYER_CLASS);
         this.level = nbt.getInt(NBT_KEY_LEVEL);
-        this.experience = nbt.getInt(NBT_KEY_EXPERIENCE);
+        this.experience = nbt.getFloat(NBT_KEY_EXPERIENCE);
+        this.experienceToNextLevel = nbt.getFloat(NBT_KEY_EXPERIENCE_TO_NEXT_LEVEL);
+        this.points = nbt.getInt(NBT_KEY_POINTS);
         this.strength = nbt.getInt(NBT_KEY_STRENGTH);
         this.intelligence = nbt.getInt(NBT_KEY_INTELLIGENCE);
         this.agility = nbt.getInt(NBT_KEY_AGILITY);

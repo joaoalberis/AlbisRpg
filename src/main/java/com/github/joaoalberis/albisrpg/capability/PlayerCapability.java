@@ -39,10 +39,18 @@ public class PlayerCapability {
             playerData.setPlayerClass(originalData.getPlayerClass());
             playerData.setLevel(originalData.getLevel());
             playerData.setExperience(originalData.getExperience());
+            playerData.setExperienceToNextLevel(originalData.getExperienceToNextLevel());
+            playerData.setPoints(originalData.getPoints());
             playerData.setStrength(originalData.getStrength());
             playerData.setIntelligence(originalData.getIntelligence());
             playerData.setAgility(originalData.getAgility());
             playerData.setVitality(originalData.getVitality());
+            playerData.setDamage(originalData.getDamage());
+            playerData.setDefense(originalData.getDefense());
+            playerData.setSpeed(originalData.getSpeed());
+            playerData.setMana(originalData.getMana());
+            playerData.setMaxMana(originalData.getMaxMana());
+            playerData.setHealth(originalData.getHealth());
         }
 
         @SubscribeEvent

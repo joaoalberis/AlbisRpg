@@ -13,11 +13,14 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class CharacterGui extends Screen {
 
     private static final Component TITTLE = Component.translatable("gui.albisrpg.character.title");
     private static final Component LEVEL = Component.translatable("gui.albisrpg.character.level");
+    private static final Component POINTS = Component.translatable("gui.albisrpg.character.points");
     private static final Component EXPERIENCE = Component.translatable("gui.albisrpg.character.experience");
     private static final Component CLASS = Component.translatable("gui.albisrpg.character.class");
     private static final Component ATTRIBUTES = Component.translatable("gui.albisrpg.character.ATTRIBUTES");
@@ -64,13 +67,16 @@ public class CharacterGui extends Screen {
 
             graphics.blitWithBorder(background, x, y, 0, 0, bgWidth, bgHeight, bgWidth, bgHeight, 10);
             x+=15;
-            y+=20;
+            y+=15;
             graphics.drawString(font, LEVEL, x, y, 0x000000, false);
             graphics.drawString(font, String.valueOf(c.getLevel()), x + LEVEL.getString().length() * 6, y, 0x000000, false);
-            y+=15;
+            y+=10;
+            graphics.drawString(font, POINTS, x, y, 0x000000, false);
+            graphics.drawString(font, String.valueOf(c.getPoints()), x + POINTS.getString().length() * 6, y, 0x000000, false);
+            y+=10;
             graphics.drawString(font, EXPERIENCE, x, y, 0x000000, false);
-            graphics.drawString(font, String.valueOf(c.getExperience()), x + EXPERIENCE.getString().length() * 6, y, 0x000000, false);
-            y+=15;
+            graphics.drawString(font, c.getExperience() + " / " + c.getExperienceToNextLevel(), x + EXPERIENCE.getString().length() * 6, y, 0x000000, false);
+            y+=10;
             graphics.drawString(font, CLASS, x, y, 0x000000, false);
             graphics.drawString(font, c.getPlayerClass(), x + CLASS.getString().length() * 6, y, 0x000000, false);
             y+=25;
@@ -122,6 +128,9 @@ public class CharacterGui extends Screen {
     private void handlerButtonClass(Button button) {
         Component message = button.getMessage();
         player.getCapability(PlayerCapability.PLAYER_CAPABILITY).ifPresent(c -> {
+            if (c.getPoints() <= 0){
+                return;
+            }
             switch (message.getString()){
                 case "strength" -> {
                     c.setStrength(c.getStrength() + 1);
@@ -138,8 +147,12 @@ public class CharacterGui extends Screen {
                 case "vitally" -> {
                     c.setVitality(c.getVitality() + 1);
                     c.setHealth(c.getVitality() * 10);
+                    AttributeInstance attribute = player.getAttribute(Attributes.MAX_HEALTH);
+                    attribute.setBaseValue(attribute.getBaseValue() + c.getHealth());
+                    player.setHealth(player.getMaxHealth());
                 }
             }
+            c.setPoints(c.getPoints() - 1);
             c.syncToServer(player);
         });
     }

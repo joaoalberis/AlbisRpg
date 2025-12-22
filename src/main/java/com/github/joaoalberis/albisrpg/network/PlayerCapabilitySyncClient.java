@@ -36,10 +36,18 @@ public class PlayerCapabilitySyncClient {
                 variables.setPlayerClass(msg.playerCapability.getPlayerClass());
                 variables.setLevel(msg.playerCapability.getLevel());
                 variables.setExperience(msg.playerCapability.getExperience());
+                variables.setExperienceToNextLevel(msg.playerCapability.getExperienceToNextLevel());
+                variables.setPoints(msg.playerCapability.getPoints());
                 variables.setStrength(msg.playerCapability.getStrength());
                 variables.setAgility(msg.playerCapability.getAgility());
                 variables.setIntelligence(msg.playerCapability.getIntelligence());
                 variables.setVitality(msg.playerCapability.getVitality());
+                variables.setDamage(msg.playerCapability.getDamage());
+                variables.setDefense(msg.playerCapability.getDefense());
+                variables.setSpeed(msg.playerCapability.getSpeed());
+                variables.setMana(msg.playerCapability.getMana());
+                variables.setMaxMana(msg.playerCapability.getMaxMana());
+                variables.setHealth(msg.playerCapability.getHealth());
             });
         });
         ctx.get().setPacketHandled(true);
