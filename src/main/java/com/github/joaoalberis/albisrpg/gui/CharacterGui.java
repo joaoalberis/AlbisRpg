@@ -54,11 +54,12 @@ public class CharacterGui extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mousex, int mousey, float partialTicks) {
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(graphics);
         player.getCapability(PlayerCapability.PLAYER_CAPABILITY).ifPresent(c -> {
             int x = leftPos;
             int y = topPos;
+            int padding = 4;
             Font font = minecraftInstance.font;
 
             graphics.blitWithBorder(background, x, y, 0, 0, bgWidth, bgHeight, bgWidth, bgHeight, 10);
@@ -66,21 +67,21 @@ public class CharacterGui extends Screen {
             y+=15;
             graphics.drawString(font, LEVEL, x, y, 0x000000, false);
             graphics.drawString(font, String.valueOf(c.getLevel()), x + LEVEL.getString().length() * 6, y, 0x000000, false);
-            y+=10;
+            y += 12;
             graphics.drawString(font, POINTS, x, y, 0x000000, false);
             graphics.drawString(font, String.valueOf(c.getPoints()), x + POINTS.getString().length() * 6, y, 0x000000, false);
-            y+=10;
+            y += 12;
             graphics.drawString(font, EXPERIENCE, x, y, 0x000000, false);
             graphics.drawString(font, c.getExperience() + " / " + c.getExperienceToNextLevel(), x + EXPERIENCE.getString().length() * 6, y, 0x000000, false);
-            y+=10;
+            y += 12;
             graphics.drawString(font, CLASS, x, y, 0x000000, false);
             graphics.drawString(font, c.getPlayerClass(), x + CLASS.getString().length() * 6, y, 0x000000, false);
-            y+=25;
+            y += 20;
             graphics.drawString(font, ATTRIBUTES, x, y, 0x000000, false);
             y+=15;
             x+=10;
             graphics.drawString(font, STRENGTH, x, y, 0x000000, false);
-            graphics.drawString(font, String.valueOf(c.getStrength()), x + STRENGTH.getString().length() * 6, y, 0x000000, false);
+            graphics.drawString(font, String.valueOf(c.getStrength()), x + STRENGTH.getString().length() * 6 + padding, y, 0x000000, false);
             addButton(x - 12, y - 2, 10, 10, 10, 10, "strength");
             y+=15;
             graphics.drawString(font, AGILITY, x, y, 0x000000, false);
@@ -98,22 +99,22 @@ public class CharacterGui extends Screen {
             x=this.bgWidth;
             y=topPos * 2;
             graphics.drawString(font, DAMAGE, x, y, 0x000000, false);
-            graphics.drawString(font, String.valueOf(c.getDamage()), x + DAMAGE.getString().length() * 6, y, 0x000000, false);
-            y+=10;
+            graphics.drawString(font, String.valueOf(c.getDamage()), (x + DAMAGE.getString().length() * 6) + padding, y, 0x000000, false);
+            y += 12;
             graphics.drawString(font, DEFENSE, x, y, 0x000000, false);
-            graphics.drawString(font, String.valueOf(c.getDefense()), x + DEFENSE.getString().length() * 6, y, 0x000000, false);
-            y+=10;
+            graphics.drawString(font, String.valueOf(c.getDefense()), (x + DEFENSE.getString().length() * 6) + padding, y, 0x000000, false);
+            y += 12;
             graphics.drawString(font, SPEED, x, y, 0x000000, false);
-            graphics.drawString(font, String.valueOf(c.getSpeed()), x + SPEED.getString().length() * 6, y, 0x000000, false);
-            y+=10;
+            graphics.drawString(font, String.valueOf(c.getSpeed()), (x + SPEED.getString().length() * 6), y, 0x000000, false);
+            y += 12;
             graphics.drawString(font, MANA, x, y, 0x000000, false);
-            graphics.drawString(font, String.valueOf(c.getMaxMana()), x + MANA.getString().length() * 6, y, 0x000000, false);
-            y+=10;
+            graphics.drawString(font, String.valueOf(c.getMaxMana()), (x + MANA.getString().length() * 6) + padding, y, 0x000000, false);
+            y += 12;
             graphics.drawString(font, HEALTH, x, y, 0x000000, false);
-            graphics.drawString(font, String.valueOf(c.getHealth()), x + HEALTH.getString().length() * 6, y, 0x000000, false);
+            graphics.drawString(font, String.valueOf(c.getHealth()), (x + HEALTH.getString().length() * 6) + padding, y, 0x000000, false);
         });
 
-        super.render(graphics, mousex, mousey, partialTicks);
+        super.render(graphics, mouseX, mouseY, partialTicks);
     }
 
     private void addButton(int x, int y, int width, int height, int textureWidth, int textureHeight, String name) {

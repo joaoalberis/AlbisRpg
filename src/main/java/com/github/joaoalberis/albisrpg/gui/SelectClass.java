@@ -2,6 +2,7 @@ package com.github.joaoalberis.albisrpg.gui;
 
 import com.github.joaoalberis.albisrpg.Albisrpg;
 import com.github.joaoalberis.albisrpg.capability.PlayerCapability;
+import com.github.joaoalberis.albisrpg.classes.PlayerClass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -10,20 +11,16 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
-import java.util.List;
-
 public class SelectClass extends Screen {
 
-    private static final ResourceLocation BACKGROUND_LOCATION = new ResourceLocation("minecraft:textures/gui/demo_background.png");
+    private static final ResourceLocation BACKGROUND_LOCATION = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/gui/demo_background.png");
     private static final Component TITTLE = Component.translatable("gui." + Albisrpg.MODID + ".selectclass.title");
-    private static final List<String> CLASSES = List.of("Warrior", "Mage", "Rogue");
 
     private int leftPos, topPos;
     private int bgWidth, bgHeight;
 
-
-    public SelectClass(Component p_96550_) {
-        super(p_96550_);
+    public SelectClass(Component component) {
+        super(component);
     }
 
     @Override
@@ -37,7 +34,7 @@ public class SelectClass extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mousex, int mousey, float partialTicks) {
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         Minecraft instance = Minecraft.getInstance();
         this.renderBackground(graphics);
 
@@ -48,20 +45,21 @@ public class SelectClass extends Screen {
 
         y += 20;
 
-        for (int i = 0; i < CLASSES.size(); i++){
+        for ( PlayerClass c : PlayerClass.values() ) {
             this.addRenderableWidget(Button.builder(
-                    Component.literal(CLASSES.get(i)),
-                    this::handlerButtonClass
-            ).bounds(leftPos, y, 50, 20).build());
+                    Component.literal(c.getName()),
+                    this::handleButtonClass
+            ).bounds(leftPos + 20, y, 50, 20).build());
             y += 40;
         }
 
-        super.render(graphics, mousex, mousey, partialTicks);
+        super.render(graphics, mouseX, mouseY, partialTicks);
     }
 
-    private void handlerButtonClass(Button button) {
+    private void handleButtonClass( Button button ) {
         String className = button.getMessage().getString();
         LocalPlayer player = Minecraft.getInstance().player;
+        if ( player == null ) return;
         player.getCapability(PlayerCapability.PLAYER_CAPABILITY).ifPresent(c -> {
             c.setPlayerClass(className);
             player.displayClientMessage(Component.literal("Your class was select -> " + className), true);
