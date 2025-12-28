@@ -19,5 +19,9 @@
   "gui.albisrpg.character.stats.defense": "Defesa",
   "gui.albisrpg.character.stats.speed": "Velocidade",
   "gui.albisrpg.character.stats.health": "Vida",
-  "gui.albisrpg.character.stats.mana": "Mana"
+  "gui.albisrpg.character.stats.mana": "Mana",
+
+  "class.albisrpg.character.warrior": "Guerreiro",
+  "class.albisrpg.character.mage": "Mago",
+  "class.albisrpg.character.rogue": "Rogue"
 }

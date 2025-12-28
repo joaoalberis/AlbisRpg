@@ -27,6 +27,11 @@ public class NetworkHandler {
                 PlayerCapabilitySyncServer::encode,
                 PlayerCapabilitySyncServer::new,
                 PlayerCapabilitySyncServer::handle);
+        INSTANCE.registerMessage(id++,
+                C2SUpdateTranslation.class,
+                C2SUpdateTranslation::encode,
+                C2SUpdateTranslation::new,
+                C2SUpdateTranslation::handle);
     }
 
 }

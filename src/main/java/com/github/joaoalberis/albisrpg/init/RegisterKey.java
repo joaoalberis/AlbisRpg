@@ -28,7 +28,7 @@ public class RegisterKey {
                     LocalPlayer player = instance.player;
                     PlayerCapabilityInterface playerCapability = player.getCapability(PlayerCapability.PLAYER_CAPABILITY).orElse(new PlayerCapabilityImplementation());
                     if (playerCapability.getPlayerClass().isEmpty()) {
-                        player.sendSystemMessage(Component.literal("Voce clicou no n"));
+//                        player.sendSystemMessage(Component.literal("Voce clicou no n"));
                         instance.setScreen(new SelectClass(Component.literal("teste")));
                     }else {
                         player.displayClientMessage(Component.literal("You already have a class: " + playerCapability.getPlayerClass()), true);
