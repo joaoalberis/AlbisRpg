@@ -75,7 +75,7 @@ public class CharacterGui extends Screen {
             graphics.drawString(font, c.getExperience() + " / " + c.getExperienceToNextLevel(), x + EXPERIENCE.getString().length() * 6, y, 0x000000, false);
             y += 12;
             graphics.drawString(font, CLASS, x, y, 0x000000, false);
-            graphics.drawString(font, c.getPlayerClass(), x + CLASS.getString().length() * 6, y, 0x000000, false);
+            graphics.drawString(font, c.getPlayerClass().getName(), x + CLASS.getString().length() * 6, y, 0x000000, false);
             y += 20;
             graphics.drawString(font, ATTRIBUTES, x, y, 0x000000, false);
             y+=15;

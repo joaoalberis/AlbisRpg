@@ -1,5 +1,6 @@
 package com.github.joaoalberis.albisrpg.capability;
 
+import com.github.joaoalberis.albisrpg.classes.PlayerClass;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -9,8 +10,8 @@ public interface PlayerCapabilityInterface extends INBTSerializable<CompoundTag>
     void addExperience(float amount);
     void syncToClient(Entity entity);
     void syncToServer(Entity entity);
-    String getPlayerClass();
-    void setPlayerClass(String playerClass);
+    PlayerClass getPlayerClass();
+    void setPlayerClass(PlayerClass playerClass);
     int getLevel();
     void setLevel(int level);
     float getExperienceToNextLevel();

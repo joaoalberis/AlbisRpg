@@ -11,6 +11,9 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 public class SelectClass extends Screen {
 
     private static final ResourceLocation BACKGROUND_LOCATION = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/gui/demo_background.png");
@@ -48,7 +51,7 @@ public class SelectClass extends Screen {
         for ( PlayerClass c : PlayerClass.values() ) {
             this.addRenderableWidget(Button.builder(
                     Component.literal(c.getName()),
-                    this::handleButtonClass
+                    button -> this.handleButtonClass(button, c.ordinal())
             ).bounds(leftPos + 20, y, 50, 20).build());
             y += 40;
         }
@@ -56,12 +59,12 @@ public class SelectClass extends Screen {
         super.render(graphics, mouseX, mouseY, partialTicks);
     }
 
-    private void handleButtonClass( Button button ) {
+    private void handleButtonClass( Button button, int classIndex ) {
         String className = button.getMessage().getString();
         LocalPlayer player = Minecraft.getInstance().player;
         if ( player == null ) return;
         player.getCapability(PlayerCapability.PLAYER_CAPABILITY).ifPresent(c -> {
-            c.setPlayerClass(className);
+            c.setPlayerClass(PlayerClass.values()[classIndex]);
             player.displayClientMessage(Component.literal("Your class was select -> " + className), true);
             c.syncToServer(player);
         });

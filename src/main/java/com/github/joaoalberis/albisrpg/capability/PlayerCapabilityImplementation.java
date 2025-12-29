@@ -1,5 +1,6 @@
 package com.github.joaoalberis.albisrpg.capability;
 
+import com.github.joaoalberis.albisrpg.classes.PlayerClass;
 import com.github.joaoalberis.albisrpg.network.NetworkHandler;
 import com.github.joaoalberis.albisrpg.network.PlayerCapabilitySyncClient;
 import com.github.joaoalberis.albisrpg.network.PlayerCapabilitySyncServer;
@@ -28,7 +29,7 @@ public class PlayerCapabilityImplementation implements PlayerCapabilityInterface
     private static final String NBT_KEY_MAX_HEALTH = "max_health";
 
 
-    private String playerClass = "";
+    private PlayerClass playerClass = null;
     private int level = 1;
     private float experience = 0;
     private float experienceToNextLevel = 10;
@@ -72,12 +73,12 @@ public class PlayerCapabilityImplementation implements PlayerCapabilityInterface
     }
 
     @Override
-    public String getPlayerClass() {
+    public PlayerClass getPlayerClass() {
         return this.playerClass;
     }
 
     @Override
-    public void setPlayerClass(String playerClass) {
+    public void setPlayerClass(PlayerClass playerClass) {
         this.playerClass = playerClass;
     }
 
@@ -232,7 +233,9 @@ public class PlayerCapabilityImplementation implements PlayerCapabilityInterface
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag compoundTag = new CompoundTag();
-        compoundTag.putString(NBT_KEY_PLAYER_CLASS, this.playerClass);
+        if (this.playerClass != null){
+            compoundTag.putInt(NBT_KEY_PLAYER_CLASS, this.playerClass.ordinal());
+        }
         compoundTag.putInt(NBT_KEY_LEVEL, this.level);
         compoundTag.putFloat(NBT_KEY_EXPERIENCE, this.experience);
         compoundTag.putFloat(NBT_KEY_EXPERIENCE_TO_NEXT_LEVEL, this.experienceToNextLevel);
@@ -261,7 +264,10 @@ public class PlayerCapabilityImplementation implements PlayerCapabilityInterface
         if (nbt == null) {
             nbt = (CompoundTag) serializeNBT();
         }
-        this.playerClass = nbt.getString(NBT_KEY_PLAYER_CLASS);
+        if (nbt.contains(NBT_KEY_PLAYER_CLASS)){
+            int ordinal = nbt.getInt(NBT_KEY_PLAYER_CLASS);
+            this.playerClass = PlayerClass.values()[ordinal];
+        }
         this.level = nbt.getInt(NBT_KEY_LEVEL);
         this.experience = nbt.getFloat(NBT_KEY_EXPERIENCE);
         this.experienceToNextLevel = nbt.getFloat(NBT_KEY_EXPERIENCE_TO_NEXT_LEVEL);
